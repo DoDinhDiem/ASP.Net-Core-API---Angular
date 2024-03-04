@@ -1,0 +1,119 @@
+<!-- Begin Header Area -->
+<div style="background-color: white">
+    <header class="li-header-4">
+        <!-- Begin Header Top Area -->
+        <div class="header-middle pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0">
+            <div class="container">
+                <div class="row">
+                    <!-- Begin Header Logo Area -->
+                    <div class="col-lg-3">
+                        <div class="logo pb-sm-30 pb-xs-30">
+                            <a routerLink="/">
+                                <img style="width: 230px" src="assets/Client/logo/logo-yellow-lg.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Header Logo Area End Here -->
+                    <!-- Begin Header Middle Right Area -->
+                    <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
+                        <!-- Begin Header Middle Searchbox Area -->
+                        <form action="#" class="hm-searchbox">
+                            <input type="text" placeholder="Nhập từ khóa tìm kiếm ..." />
+                            <button class="li-btn" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                        <!-- Header Middle Searchbox Area End Here -->
+                        <!-- Begin Header Middle Right Area -->
+                        <div class="header-middle-right">
+                            <ul class="hm-menu">
+                                <!-- Begin Header Middle Wishlist Area -->
+
+                                <li class="hm-minicart">
+                                    <div class="hm-minicart-trigger">
+                                        <span class="item-icon"></span>
+                                        <span class="item-text">{{ totalPrice | number}} VNĐ
+                                            <span class="cart-item-count" style="font-weight: 500;">{{ quantity
+                                                }}</span>
+                                        </span>
+                                    </div>
+                                    <span></span>
+                                    <div class="minicart">
+                                        <ul class="minicart-product-list">
+                                            <li *ngFor="let cart of cartItems">
+                                                <a class="minicart-product-image"
+                                                    style="border-radius: 5px; padding: 5px;">
+                                                    <img src="assets/Uploads/products/{{ cart.avatar }}"
+                                                        alt="cart products" />
+                                                </a>
+                                                <div class="minicart-product-details">
+                                                    <h6>
+                                                        <a>{{ cart.tenSanPham }}</a>
+                                                    </h6>
+                                                    <span>{{ cart.giaGiam | number}} x {{ cart.soLuong }}</span>
+                                                </div>
+                                                <button class="close" (click)="removeFromCart(cart)">
+                                                    <i class="fa fa-close"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <p class="minicart-total">
+                                            Tổng tiền: <span>{{ totalPrice | number}} VNĐ</span>
+                                        </p>
+                                        <div class="minicart-button">
+                                            <a routerLink="/cart"
+                                                class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                                <span>Giỏ hàng</span>
+                                            </a>
+                                            <a routerLink="/payment" class="li-button li-button-fullwidth li-button-sm">
+                                                <span>Thanh toán</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="hm-wishlist">
+                                    <a *ngIf="!token" style="border-radius: 5px" routerLink="/loginClient">
+                                        <i class="pi pi-user"></i>
+                                    </a>
+                                    <a *ngIf="token" style="border-radius: 5px" (click)="toggleProfileMenu()">
+                                        <i class="pi pi-user"></i>
+                                    </a>
+                                    <div *ngIf="isProfileMenuOpen" class="profile-dropdown">
+                                        <ul>
+                                            <li><a class="p-link" href="#">
+                                                    <i class="pi pi-fw pi-user" style="font-size: 12px !important;"></i>
+                                                    Hồ sơ
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a style="font-weight: 500;" class="p-link" (click)="onSubmit()">
+                                                    <i class="pi pi-fw pi-power-off"
+                                                        style="font-size: 12px !important;"></i>
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-header></app-header>
+
+        <div class="mobile-menu-area mobile-menu-area-4 d-lg-none d-xl-none col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <router-outlet></router-outlet>
+
+    <app-footer></app-footer>
+</div>

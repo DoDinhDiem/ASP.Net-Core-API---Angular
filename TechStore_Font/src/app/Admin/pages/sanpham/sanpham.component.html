@@ -1,0 +1,459 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Thêm mới"
+                        style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                        icon="pi pi-plus" class=" button-radius me-2 " (click)="openNew()"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                        (click)="deleteSelected()" [disabled]="!selecteds || !selecteds.length"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                        label="Xuất file Excel" icon="pi pi-upload" class="p-button-help button-radius"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="sanphams" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['tenSanPham', 'giaBan', 'khuyenMai', 'soLuongTon', 'baoHanh','trangThaiHoatDong', 'createDate', 'updateDate']"
+                [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                [showCurrentPageReport]="true" [scrollable]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">{{ title }}</h5>
+                        <span class="p-input-icon-left flex ">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="keyword" (input)="onKeywordInput()"
+                                placeholder="Search..." />
+
+                            <p-overlayPanel #op class="ml-3">
+                                <ng-template pTemplate="content">
+                                    <h4>Tìm kiếm theo giá</h4>
+                                    <p class="p-float-label mt-3">
+                                        <p-autoComplete [(ngModel)]="minGiaBan" (input)="onKeywordInput()" inputId="Từ"
+                                            (keypress)="onKeyPress($event)">
+                                        </p-autoComplete>
+                                        <label for="float-label">Từ</label>
+                                    </p>
+                                    <p class="p-float-label mt-4">
+                                        <p-autoComplete [(ngModel)]="maxGiaBan" (input)="onKeywordInput()" inputId="Đến"
+                                            (keypress)="onKeyPress($event)"></p-autoComplete>
+                                        <label for="float-label">Đến</label>
+                                    </p>
+                                </ng-template>
+                            </p-overlayPanel>
+                            <p-button (click)="op.toggle($event)" icon="pi pi-filter"></p-button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr class="text-center">
+                        <th class="text-center" style="width: 4rem;">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th class="text-center">Chức năng</th>
+                        <th class="text-center">Ảnh</th>
+                        <th class="text-center" pSortableColumn="tenSanPham">Tên sản phẩm<p-sortIcon
+                                field="tenSanPham"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="giaBan">Giá bán<p-sortIcon field="giaBan"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="khuyenMai">Khuyến mại<p-sortIcon
+                                field="khuyenMai"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="soLuongTon">Số lượng tồn<p-sortIcon
+                                field="soLuongTon"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="baoHanh">Bảo hành<p-sortIcon
+                                field="baoHanh"></p-sortIcon>
+                        </th>
+                        <th class="text-center" style="width: 304px;" pSortableColumn="moTa">Mô tả<p-sortIcon
+                                field="moTa"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Loại sản phẩm</th>
+                        <th class="text-center">Hãng sản phẩm</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center" pSortableColumn="trangThaiHoatDong">Ẩn/Hiện<p-sortIcon
+                                field="trangThaiHoatDong"></p-sortIcon>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-sanpham>
+                    <tr>
+                        <td class="text-center">
+                            <p-tableCheckbox [value]="sanpham"></p-tableCheckbox>
+                        </td>
+                        <td class="text-center">
+                            <p-accordion>
+                                <p-accordionTab header="Action">
+                                    <button pRipple class="button-actioc-many" (click)="edit(sanpham)"><i
+                                            class="pi pi-pencil"></i> Sửa</button>
+                                    <button class="button-actioc-many" (click)="deleteOnly(sanpham)"><i
+                                            class="pi pi-trash"></i> Xóa</button>
+                                    <button class="button-actioc-many" (click)="openImg(sanpham)"><i
+                                            class="pi pi-images"></i> Ảnh</button>
+                                    <button class="button-actioc-many" (click)="openParameter(sanpham)"><i
+                                            class="pi pi-book"></i> Thông số</button>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </td>
+                        <td class="text-center">
+                            <img width="100px" style="box-shadow: 5px 5px 10px 0px #888888;
+                            border-radius: 5px;" src="assets/Uploads/products/{{ sanpham.anhDaiDien }}" alt="">
+                        </td>
+                        <td class="text-center" style="min-width: 200px;">{{ sanpham.tenSanPham }}</td>
+                        <td class="text-center">{{ sanpham.giaBan | number }}
+                        </td>
+                        <td class="text-center">{{ sanpham.khuyenMai | number }}</td>
+                        <td class="text-center">{{ sanpham.soLuongTon }}</td>
+                        <td class="text-center">{{ sanpham.baoHanh }}</td>
+                        <td class="text-center" style="min-width: 304px;">{{ sanpham.moTa | slice:0:100 }} ...</td>
+                        <td class="text-center">{{sanpham.loaiId}}</td>
+                        <td class="text-center">{{ sanpham.hangSanXuatId}}</td>
+                        <td class="text-center">{{ sanpham.trangThaiSanPham }}</td>
+                        <td class="text-center">
+                            <p-inputSwitch [(ngModel)]="sanpham.trangThaiHoatDong"
+                                (ngModelChange)="toggleTrangThai(sanpham)"></p-inputSwitch>
+                        </td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        Tổng cộng có {{ sanphams ? sanphams.length : 0 }} sản phẩm.</div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="Dialog" [style]="{ width: '1050px' }" [header]="title" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="tenSanPham">Tên sản phẩm</label>
+                    <input type="text" pInputText id="tenSanPham" [(ngModel)]="sanpham.tenSanPham" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !sanpham.tenSanPham">Tên loại là bắt buộc.</small>
+                </div>
+
+                <div class="field mb-3">
+                    <label for="giaBan">Giá bán</label>
+                    <input type="number" pInputText id="giaBan" [(ngModel)]="sanpham.giaBan" required autofocus />
+                </div>
+                <div class="field mb-3">
+                    <label for="khuyenMai">Khuyến mãi</label>
+                    <input type="number" pInputText id="khuyenMai" [(ngModel)]="sanpham.khuyenMai" required autofocus />
+                </div>
+                <div class="field mb-3">
+                    <label for="baoHanh">Bảo hành</label>
+                    <input type="text" pInputText id="baoHanh" [(ngModel)]="sanpham.baoHanh" required autofocus />
+                </div>
+                <div class="field mb-3">
+                    <label for="moTa">Mô tả</label>
+                    <p-editor [(ngModel)]="sanpham.moTa" [style]="{ height: '320px' }"></p-editor>
+                </div>
+                <div pFocusTrap class="flex flex-wrap ">
+                    <div class="field mb-3 p-1 w-6">
+                        <label for="baoHanh">Loại sản phẩm</label>
+                        <p-dropdown [options]="loai" [(ngModel)]="selectedLoaiId" optionLabel="name" [filter]="true"
+                            filterBy="name">
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-3 p-1 w-6">
+                        <label for="baoHanh">Hãng sản phẩm</label>
+                        <p-dropdown [options]="hang" [(ngModel)]="selectedHangId" optionLabel="name" [filter]="true"
+                            filterBy="name">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThaiSanPham">Trạng thái sản phẩm</label>
+                    <p-dropdown [options]="status" id="trangThaiSanPham" [(ngModel)]="selectStatus"
+                        optionLabel="name"></p-dropdown>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThai">Trạng thái</label>
+                    <p-dropdown [options]="actions" id="trangThai" [(ngModel)]="selectAction"
+                        optionLabel="name"></p-dropdown>
+                </div>
+                <div class="field mb-3">
+                    <label for="duongDanAnh">Ảnh chi tiết sản phẩm</label>
+                    <div>
+                        <input type="file" id="fileInput" (change)="onFilesSelected($event)" multiple />
+                        <label for="fileInput" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="selectedFiles && selectedFiles.length > 0" class="file-selected">
+                        <p>Danh sách ảnh:</p>
+                        <ng-container *ngIf="shouldDisplayImage">
+                            <ul style="list-style: none; display: flex; flex-wrap: wrap;">
+                                <li *ngFor="let file of selectedFiles"
+                                    style="box-sizing: border-box; padding: 15px; text-align: center; ">
+                                    <img width="150px" src="assets/Uploads/products/{{ file.name }}" alt="">
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <ng-container *ngIf="!shouldDisplayImage">
+                            <ul style="list-style: none; ">
+                                <li *ngFor="let file of selectedFiles">
+                                    {{ file.name }}
+                                </li>
+                            </ul>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="field mb-3" *ngFor="let parameter of productParameters; let i = index">
+                    <label class="mb-4" for="">Thông số sản phẩm {{ i + 1 }}</label>
+                    <span class="p-float-label mb-4">
+                        <p-autoComplete [(ngModel)]="parameter.tenThongSo" inputId="float-label"></p-autoComplete>
+                        <label for="float-label">Tên thông số</label>
+                    </span>
+                    <span class="p-float-label mb-4">
+                        <p-autoComplete [(ngModel)]="parameter.moTa" inputId="float-label"></p-autoComplete>
+                        <label for="float-label">Mô tả</label>
+                    </span>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <p-button [style]="{background: '#fff', color: '#1D4E89', 'border': '1px solid #1D4E89'}"
+                        icon="pi pi-plus" (click)="addProductParameter()" label="Thêm thông số"></p-button>
+                    <p-button [style]="{background: '#fff', color: '#EF4444', border: '1px solid #BB0000'}"
+                        icon="pi pi-trash" label="Xóa thông số" (click)="removeProductParameter(i)"></p-button>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialog()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text"
+                    (click)="save()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
+
+        <!-- Ảnh sản phẩm -->
+        <p-dialog [(visible)]="DialogImg" [style]="{ width: '75vw' }" [header]="titleImg" [modal]="true"
+            (onHide)="onDialogHide()" styleClass="p-fluid">
+            <div class="col-12">
+                <div class="card">
+                    <p-toolbar styleClass="mb-4 gap-2">
+                        <ng-template pTemplate="left">
+                            <button pButton pRipple label="Thêm mới"
+                                style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                                icon="pi pi-plus" class=" button-radius me-2 " (click)="openImgDetail()"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                                (click)="deleteSelectedImg()" [disabled]="!selectedImg || !selectedImg.length"></button>
+                        </ng-template>
+
+                        <ng-template pTemplate="right">
+                            <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                                label="Xuất file Excel" icon="pi pi-upload"
+                                class="p-button-help button-radius"></button>
+                        </ng-template>
+                    </p-toolbar>
+
+                    <p-table [value]="anhs" [paginator]="true" [rows]="10" [globalFilterFields]="['trangThai']"
+                        [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selectedImg" [rowHover]="true"
+                        currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                        [showCurrentPageReport]="true" [scrollable]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+                                <h5 class="m-0">{{ titleImg }}</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr class="text-center">
+                                <th class="text-center" style="width: 4rem;">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th class="text-center" pSortableColumn="tenSanPham">Sản phẩm<p-sortIcon
+                                        field="tenSanPham"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="giaBan">Ảnh sản phẩm<p-sortIcon
+                                        field="giaBan"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="trangThai">Ảnh đại diện<p-sortIcon
+                                        field="trangThai"></p-sortIcon>
+                                </th>
+                                <th class="text-center">Chức năng</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-anh>
+                            <tr style="height: 100px;">
+                                <td class="text-center">
+                                    <p-tableCheckbox [value]="anh"></p-tableCheckbox>
+                                </td>
+                                <td class="text-center">{{ anh.sanPhamName }}</td>
+                                <td class="text-center">
+                                    <img width="200px" src="assets/Uploads/products/{{ anh.duongDanAnh }}" alt="">
+
+                                </td>
+                                <td class="text-center">
+                                    <p-inputSwitch [(ngModel)]="anh.trangThai"
+                                        (ngModelChange)="toggleTrangThaiImg(anh)"></p-inputSwitch>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px;"
+                                        class="p-button-rounded p-button-success me-2 action-button"
+                                        (click)="editImg(anh)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-warning action-button"
+                                        (click)="deleteOnlyImg(anh)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Tổng cộng có {{ anhs ? anhs.length : 0 }} ảnh sản phẩm.</div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-dialog>
+
+        <p-dialog [(visible)]="DialogImgDetail" [style]="{ width: '1050px' }" [header]="titleImg" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="duongDanAnh">Ảnh đại diện sản phẩm</label>
+                    <div>
+                        <input type="file" id="file" (change)="onFileOnly($event)" />
+                        <label for="file" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="fileOnly && fileOnly.length > 0" class="file-selected">
+                        <ul style="list-style: none;">
+                            <li *ngFor="let file of fileOnly">
+                                <ng-container *ngIf="shouldDisplayImage">
+                                    <img width="250px" src="assets/Uploads/products/{{ file.name }}" alt="">
+                                </ng-container>
+                                <ng-container *ngIf="!shouldDisplayImage">
+                                    {{ file.name }}
+                                </ng-container>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialogImg()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="saveImg()"
+                    (click)="onUploadImg()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <!-- Thông số sản phẩm -->
+        <p-dialog [(visible)]="DialogParameter" [style]="{ width: '75vw' }" [header]="titleParameter" [modal]="true"
+            (onHide)="onDialogHide()" styleClass="p-fluid">
+            <div class="col-12">
+                <div class="card">
+                    <p-toolbar styleClass="mb-4 gap-2">
+                        <ng-template pTemplate="left">
+                            <button pButton pRipple label="Thêm mới"
+                                style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                                icon="pi pi-plus" class=" button-radius me-2 " (click)="openParameterDetail()"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                                (click)="deleteSelectedParameter()"
+                                [disabled]="!selectedParameter || !selectedParameter.length"></button>
+                        </ng-template>
+
+                        <ng-template pTemplate="right">
+                            <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                                label="Xuất file Excel" icon="pi pi-upload"
+                                class="p-button-help button-radius"></button>
+                        </ng-template>
+                    </p-toolbar>
+
+                    <p-table [value]="thongsos" [paginator]="true" [rows]="10"
+                        [globalFilterFields]="['tenThongSo', 'moTa', 'trangThai']"
+                        [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selectedParameter" [rowHover]="true"
+                        currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                        [showCurrentPageReport]="true" [scrollable]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+                                <h5 class="m-0">{{ titleParameter }}</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr class="text-center">
+                                <th class="text-center" style="width: 4rem;">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th class="text-center">Sản phẩm
+                                </th>
+                                <th class="text-center" pSortableColumn="tenThongSo">Tên thông số<p-sortIcon
+                                        field="tenThongSo"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="moTa">Mô tả<p-sortIcon
+                                        field="moTa"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="trangThai">Ẩn/Hiện<p-sortIcon
+                                        field="trangThai"></p-sortIcon>
+                                </th>
+                                <th class="text-center">Chức năng</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-thongso>
+                            <tr style="height: 100px;">
+                                <td class="text-center">
+                                    <p-tableCheckbox [value]="thongso"></p-tableCheckbox>
+                                </td>
+                                <td class="text-center">{{ thongso.sanPhamName }}</td>
+                                <td class="text-center">{{ thongso.tenThongSo }}</td>
+                                <td class="text-center">{{ thongso.moTa }}</td>
+                                <td class="text-center">
+                                    <p-inputSwitch [(ngModel)]="thongso.trangThai"
+                                        (ngModelChange)="toggleTrangThaiParameter(thongso)"></p-inputSwitch>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px;"
+                                        class="p-button-rounded p-button-success me-2 action-button"
+                                        (click)="editParameter(thongso)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-warning action-button"
+                                        (click)="deleteOnlyParameter(thongso)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Tổng cộng có {{ thongsos ? thongsos.length : 0 }} thông số sản phẩm.</div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-dialog>
+
+        <p-dialog [(visible)]="DialogParameterDetail" [style]="{ width: '1050px' }" [header]="titleParameter"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="tenThongSo">Tên thông số</label>
+                    <input type="text" pInputText id="tenThongSo" [(ngModel)]="thongso.tenThongSo" required autofocus />
+                    <small class="p-error" *ngIf="submitted && thongso.tenThongSo">Tên thông số là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="moTa">Mô tả</label>
+                    <input type="text" pInputText id="moTa" [(ngModel)]="thongso.moTa" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !thongso.moTa">Tên thông số là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThai">Trạng thái</label>
+                    <p-dropdown [options]="actions" id="trangThai" [(ngModel)]="selectAction"
+                        optionLabel="name"></p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialogParameter()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text"
+                    (click)="saveParameter()"></button>
+            </ng-template>
+        </p-dialog>
+
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="login-css">
+    <p-toast></p-toast>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xs-12">
+            <div class="login-form">
+
+                <div class="logo-authen">
+                    <img class="logo" routerLink="/" src="assets/Client/logo/logo-darks-lg.png" alt="">
+                </div>
+                <h4 class="login-title">Đăng ký</h4>
+                <div class="row">
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>Họ đệm</label>
+                        <input class="mb-0" [(ngModel)]="account.firstName" type="text" placeholder="Họ đệm">
+                    </div>
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>Tên</label>
+                        <input class="mb-0" [(ngModel)]="account.lastName" type="text" placeholder="Tên">
+                    </div>
+                    <div class="col-md-12 mb-20">
+                        <label>Email*</label>
+                        <input class="mb-0" [(ngModel)]="account.email" type="email" placeholder="Email">
+                    </div>
+                    <div class="col-md-12 mb-20">
+                        <label>UserName*</label>
+                        <input class="mb-0" [(ngModel)]="account.userName" type="text" placeholder="UserName">
+                    </div>
+                    <div class="col-md-12 mb-20">
+                        <label>Số điện thoại</label>
+                        <input class="mb-0" [(ngModel)]="account.soDienThoai" type="text" placeholder="Số điện thoại">
+                    </div>
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>Mật khẩu</label>
+                        <div class="password-container">
+                            <input class="mb-0" [type]="passwordType" [(ngModel)]="account.passWord"
+                                placeholder="Mật khẩu">
+                            <span class="password-toggle" (click)="togglePasswordVisibility()">
+                                <i class="fas"
+                                    [ngClass]="{'fa-eye': passwordType === 'password', 'fa-eye-slash': passwordType === 'text'}"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 mb-20">
+                        <label>Xác nhận lại mật khẩu</label>
+                        <div class="password-container">
+                            <input class="mb-0" [type]="passwordType" [(ngModel)]="confirmPassword"
+                                placeholder="Mật khẩu">
+                            <span class="password-toggle" (click)="togglePasswordVisibility()">
+                                <i class="fas"
+                                    [ngClass]="{'fa-eye': passwordType === 'password', 'fa-eye-slash': passwordType === 'text'}"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button (click)="onSubmit()" class="register-button mt-0">Đăng ký</button>
+                    </div>
+                    <div class="col-md-12 mt-30" style="font-size: 16px; margin-left: 5px; color: #8b8b8b;">
+                        <a style="color: #8b8b8b;" routerLink="/loginClient"> -> Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

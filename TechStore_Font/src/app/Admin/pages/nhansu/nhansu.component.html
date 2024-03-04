@@ -1,0 +1,249 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Thêm mới" style="
+                            background: #fff;
+                            color: #1d4e89;
+                            border: 1px solid #1d4e89;
+                            margin-right: 5px;
+                        " icon="pi pi-plus" class="button-radius me-2" (click)="openNew()"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button style="background: #1d4e89; border: 1px solid #1d4e89" pButton pRipple
+                        label="Xuất file Excel" icon="pi pi-upload" class="p-button-help button-radius"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="nhansus" [paginator]="true" [rows]="10" [globalFilterFields]="[
+                    'userName',
+                    'email',
+                    'firstName',
+                    'lastName',
+                    'diaChi',
+                    'ngaySinh',
+                    'gioiTinh',
+                    'ngayVaoLam',
+                    'trangThai',
+                    'createDate',
+                    'updateDate'
+                ]" [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                [showCurrentPageReport]="true" [scrollable]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">{{ title }}</h5>
+                        <span class="p-input-icon-left flex">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="keyword" (input)="onKeywordInput()"
+                                placeholder="Search..." />
+
+                            <p-overlayPanel #op class="ml-3">
+                                <ng-template pTemplate="content">
+                                    <h4>Tìm kiếm</h4>
+                                    <p class="p-float-label mt-3">
+                                        <p-autoComplete [(ngModel)]="email" (input)="onKeywordInput()" inputId="Email">
+                                        </p-autoComplete>
+                                        <label for="float-label">Email</label>
+                                    </p>
+                                    <p class="p-float-label mt-4">
+                                        <p-autoComplete [(ngModel)]="diaChi" (input)="onKeywordInput()"
+                                            inputId="Địa chỉ"></p-autoComplete>
+                                        <label for="float-label">Đia chỉ</label>
+                                    </p>
+                                </ng-template>
+                            </p-overlayPanel>
+                            <p-button (click)="op.toggle($event)" icon="pi pi-filter"></p-button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center">Avatar</th>
+                        <th class="text-center" pSortableColumn="userName">
+                            UserName<p-sortIcon field="userName"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="firstName">
+                            Họ đệm<p-sortIcon field="firstName"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="lastName">
+                            Tên<p-sortIcon field="lastName"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Số điện thoại</th>
+                        <th class="text-center" pSortableColumn="diaChi">
+                            Địa chỉ<p-sortIcon field="diaChi"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="email">
+                            Email<p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="ngaySinh">
+                            Ngày sinh<p-sortIcon field="ngaySinh"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="gioiTinh">
+                            Giới tính<p-sortIcon field="gioiTinh"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="ngayVaoLam">
+                            Ngày vào làm<p-sortIcon field="ngayVaoLam"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Quyền</th>
+                        <th class="text-center">Chức vụ</th>
+                        <th class="text-center" pSortableColumn="trangThai">
+                            Nghỉ/Chưa<p-sortIcon field="trangThai"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Chức năng</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-nhansu>
+                    <tr>
+                        <td class="text-center">
+                            <ng-container *ngIf="!nhansu.avatar">
+                                <img width="80px" style="border-radius: 5px" src="assets/Uploads/avatar.jpg" alt="" />
+                            </ng-container>
+                            <ng-container *ngIf="nhansu.avatar">
+                                <img width="80px" style="border-radius: 5px"
+                                    src="assets/Uploads/personnel/{{nhansu.avatar}}" alt="" />
+                            </ng-container>
+                        </td>
+                        <td class="text-center">{{ nhansu.userName }}</td>
+                        <td class="text-center">{{ nhansu.firstName }}</td>
+                        <td class="text-center">{{ nhansu.lastName }}</td>
+                        <td class="text-center">{{ nhansu.soDienThoai }}</td>
+                        <td class="text-center">{{ nhansu.diaChi }}</td>
+                        <td class="text-center">{{ nhansu.email }}</td>
+                        <td class="text-center">
+                            {{ nhansu.ngaySinh | date : "dd/MM/yyyy" }}
+                        </td>
+                        <td class="text-center">{{ nhansu.gioiTinh }}</td>
+                        <td class="text-center">
+                            {{ nhansu.ngayVaoLam | date : "dd/MM/yyyy" }}
+                        </td>
+                        <td class="text-center">{{ nhansu.role }}</td>
+                        <td class="text-center">{{ nhansu.chucVuId }}</td>
+                        <td class="text-center">
+                            <p-inputSwitch [(ngModel)]="nhansu.trangThai"
+                                (ngModelChange)="toggleTrangThai(nhansu)"></p-inputSwitch>
+                        </td>
+                        <td class="text-center">
+                            <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px"
+                                class="p-button-rounded p-button-success me-2 action-button"
+                                (click)="edit(nhansu)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        Tổng cộng có {{ nhansus ? nhansus.length : 0 }} nhân
+                        viên.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="Dialog" [style]="{ width: '750px' }" [header]="title" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="duongDanAnh">Avatar</label>
+                    <div>
+                        <input autocomplete="off" type="file" id="file" (change)="onFileOnly($event)" />
+                        <label for="file" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="fileOnly" class="file-selected">
+                        <ng-container *ngIf="shouldDisplayImage">
+                            <img width="200px" style="margin: auto; border-radius: 5px"
+                                src="assets/Uploads/personnel/{{ fileOnly.name }}" alt="" />
+                        </ng-container>
+                        <ng-container *ngIf="!shouldDisplayImage">
+                            {{ fileOnly.name }}
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="field mb-3" *ngIf="!shouldDisplayImage">
+                    <label for="userName">UserName</label>
+                    <input autocomplete="off" type="text" pInputText id="userName" [(ngModel)]="nhansu.userName"
+                        required autofocus />
+                    <small class="p-error" *ngIf="submitted && !nhansu.userName">UserName là bắt buộc.</small>
+                </div>
+                <div class="field mb-3" *ngIf="!shouldDisplayImage">
+                    <label for="email">Email</label>
+                    <input autocomplete="off" type="email" pInputText id="email" [(ngModel)]="nhansu.email" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !nhansu.email">Email là bắt buộc.</small>
+                </div>
+                <div class="field mb-3" *ngIf="!shouldDisplayImage">
+                    <label for="passWord">Mật khẩu</label>
+                    <input autocomplete="off" type="text" pInputText id="passWord" value="techstore@123"
+                        placeholder="techstore@123" [(ngModel)]="nhansu.passWord" readonly="false" autofocus />
+                </div>
+                <div class="field mb-3">
+                    <label for="firstName">Họ đệm</label>
+                    <input autocomplete="off" type="firstName" pInputText id="firstName" [(ngModel)]="nhansu.firstName"
+                        required autofocus />
+                    <small class="p-error" *ngIf="submitted && !nhansu.firstName">Họ đệm là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="lastName">Tên</label>
+                    <input autocomplete="off" type="lastName" pInputText id="lastName" [(ngModel)]="nhansu.lastName"
+                        required autofocus />
+                    <small class="p-error" *ngIf="submitted && !nhansu.lastName">Tên nhân viên là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="soDienThoai">Số điện thoại</label>
+                    <p-inputMask mask="0999999999" [(ngModel)]="nhansu.soDienThoai"></p-inputMask>
+                    <small class="p-error" *ngIf="submitted && !nhansu.soDienThoai">Số điện thoại là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="diaChi">Địa chỉ</label>
+                    <input autocomplete="off" type="diaChi" pInputText id="diaChi" [(ngModel)]="nhansu.diaChi" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !nhansu.diaChi">Địa chỉ là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="ngaySinh">Ngày sinh</label>
+                    <p-calendar [(ngModel)]="nhansu.ngaySinh" [dateFormat]="'dd-mm-yy'" [showIcon]="true" required
+                        autofocus></p-calendar>
+                    <small class="p-error" *ngIf="submitted && !nhansu.ngaySinh">Ngày sinh là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="gioiTinh">Giới tính</label>
+                    <p-dropdown [options]="genders" [(ngModel)]="selectGender" optionLabel="name"></p-dropdown>
+                </div>
+                <div class="field mb-3">
+                    <label for="ngayVaoLam">Ngày vào làm</label>
+                    <p-calendar [(ngModel)]="nhansu.ngayVaoLam" [dateFormat]="'dd-mm-yy'" [showIcon]="true" required
+                        autofocus></p-calendar>
+                    <small class="p-error" *ngIf="submitted && !nhansu.ngayVaoLam">Ngày vào làm là bắt buộc.</small>
+                </div>
+                <div pFocusTrap class="flex flex-wrap">
+                    <div class="field mb-3 pr-1 w-6">
+                        <label for="roleId">Quyền</label>
+                        <p-dropdown [options]="role" [(ngModel)]="selectRole" optionLabel="name" [filter]="true"
+                            filterBy="name">
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-3 w-6">
+                        <label for="chucVuId">Chức vụ</label>
+                        <p-dropdown [options]="chucvu" [(ngModel)]="selectChucVu" optionLabel="name" [filter]="true"
+                            filterBy="name">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThai">Trạng thái</label>
+                    <p-dropdown [options]="actions" [(ngModel)]="selectAction" optionLabel="name"></p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialog()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="save()"
+                    (click)="onUpload()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
+    </div>
+</div>

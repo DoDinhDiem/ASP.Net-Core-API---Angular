@@ -1,0 +1,203 @@
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a routerLink="/">Trang chủ</a></li>
+                <li class="active">{{ name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Li's Content Wraper Area -->
+<div class="content-wraper pt-60 pb-60 pt-sm-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 order-1 order-lg-2">
+
+                <!-- shop-products-wrapper start -->
+                <div class="shop-products-wrapper">
+                    <div class="tab-content">
+                        <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
+                            <div class="product-area shop-product-area">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 mt-40"
+                                        *ngFor="let sp of sanphams | paginate: { itemsPerPage: 30, currentPage: p }">
+                                        <!-- single-product-wrap start -->
+                                        <div class="single-product-wrap">
+                                            <div class="product-image">
+                                                <a [routerLink]="['/chitiet',sp.id]">
+                                                    <img src="assets/Uploads/products/{{sp.avatar}}"
+                                                        alt="{{sp.avatar}}" />
+                                                </a>
+                                                <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0)
+                                                    }}%</span>
+                                            </div>
+                                            <div class="product_desc">
+                                                <div class="product_desc_info">
+                                                    <h4>
+                                                        <a class="product_name" [routerLink]="['/chitiet',sp.id]">
+                                                            {{ sp.tenSanPham }}
+                                                        </a>
+                                                    </h4>
+                                                    <div class="price-box">
+                                                        <span class="new-price">
+                                                            {{ sp.giaBan - sp.khuyenMai| number }}
+                                                        </span>
+                                                        <span *ngIf="sp.khuyenMai > 0 " class="old-price">{{ sp.giaBan|
+                                                            number }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="add-actions">
+                                                    <ul class="add-actions-link">
+                                                        <li class="add-cart active" style="cursor: pointer;"
+                                                            (click)="addToCart(sp)">
+                                                            <a>Thêm vào giỏ hàng</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="paginatoin-area">
+                            <div class="row justify-content-center">
+                                <pagination-controls (pageChange)="p = $event"
+                                    class="my-pagination"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- shop-products-wrapper end -->
+            </div>
+            <div class="col-lg-3 order-2 order-lg-1">
+                <div class="sidebar-categores-box">
+                    <div class="sidebar-title">
+                        <h2>Tìm kiếm</h2>
+                    </div>
+                    <!-- btn-clear-all end -->
+                    <!-- filter-sub-area start -->
+                    <div class="filter-sub-area">
+                        <h5 class="filter-sub-titel">Hãng sản phẩm</h5>
+                        <div class="categori-checkbox">
+                            <form action="#">
+                                <ul>
+                                    <li *ngFor="let hsp of hangSanPhams">
+                                        <input type="checkbox" name="product-categori" /><a routerLink="">
+                                            {{hsp.tenHang}}</a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- filter-sub-area end -->
+                    <!-- filter-sub-area start -->
+                    <div class="filter-sub-area pt-sm-10 pt-xs-10">
+                        <h5 class="filter-sub-titel">Loại sản phẩm</h5>
+                        <div class="categori-checkbox">
+                            <form action="#">
+                                <ul>
+                                    <li *ngFor="let lsp of loais">
+                                        <a [routerLink]="['/loaisp', lsp.id]">{{ lsp.tenLoai }}</a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- filter-sub-area end -->
+                    <!-- filter-sub-area start -->
+
+                    <!-- <div class="filter-sub-area pt-sm-10 pt-xs-10">
+                        <h5 class="filter-sub-titel">Size</h5>
+                        <div class="size-checkbox">
+                            <form action="#">
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="product-size" /><a href="#">S (3)</a>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="product-size" /><a href="#">M (3)</a>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="product-size" /><a href="#">L (3)</a>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="product-size" /><a href="#">XL (3)</a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div> -->
+
+                    <!-- filter-sub-area end -->
+                    <!-- filter-sub-area start -->
+                    <!-- <div class="filter-sub-area pt-sm-10 pt-xs-10">
+                        <h5 class="filter-sub-titel">Color</h5>
+                        <div class="color-categoriy">
+                            <form action="#">
+                                <ul>
+                                    <li>
+                                        <span class="white"></span><a href="#">White (1)</a>
+                                    </li>
+                                    <li>
+                                        <span class="black"></span><a href="#">Black (1)</a>
+                                    </li>
+                                    <li>
+                                        <span class="Orange"></span><a href="#">Orange (3) </a>
+                                    </li>
+                                    <li>
+                                        <span class="Blue"></span><a href="#">Blue (2) </a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div> -->
+                    <!-- filter-sub-area end -->
+                    <!-- filter-sub-area start -->
+
+                    <!-- <div class="filter-sub-area pt-sm-10 pb-sm-15 pb-xs-15">
+                        <h5 class="filter-sub-titel">Dimension</h5>
+                        <div class="categori-checkbox">
+                            <form action="#">
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="product-categori" /><a href="#">40x60cm (6)</a>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="product-categori" /><a href="#">60x90cm (6)</a>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="product-categori" /><a href="#">80x120cm (6)</a>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div> -->
+
+                    <!-- filter-sub-area end -->
+                </div>
+                <!--sidebar-categores-box end  -->
+                <!-- category-sub-menu start -->
+
+                <!-- <div class="sidebar-categores-box mb-sm-0 mb-xs-0">
+                    <div class="sidebar-title">
+                        <h2>Laptop</h2>
+                    </div>
+                    <div class="category-tags">
+                        <ul>
+                            <li><a href="# ">Devita</a></li>
+                            <li><a href="# ">Cameras</a></li>
+                            <li><a href="# ">Sony</a></li>
+                            <li><a href="# ">Computer</a></li>
+                            <li><a href="# ">Big Sale</a></li>
+                            <li><a href="# ">Accessories</a></li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,268 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Thêm mới"
+                        style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                        icon="pi pi-plus" class=" button-radius me-2 " (click)="openNew()"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                        (click)="deleteSelected()" [disabled]="!selecteds || !selecteds.length"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                        label="Xuất file Excel" icon="pi pi-upload" class="p-button-help button-radius"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="tintucs" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['tieuDe', 'noiDung', 'trangThai']" [tableStyle]="{ 'min-width': '60rem' }"
+                [(selection)]="selecteds" [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                [showCurrentPageReport]="true" [scrollable]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">{{ title }}</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="keyword" (input)="onKeywordInput()"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr class="text-center">
+                        <th class="text-center" style="width: 4rem;">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th class="text-center">Ảnh</th>
+                        <th class="text-center">Loại tin tức</th>
+                        <th class="text-center" pSortableColumn="tieuDe">Tiêu đề<p-sortIcon field="tieuDe"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="noiDung">Nội dung<p-sortIcon
+                                field="noiDung"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="trangThai">Ẩn/Hiện<p-sortIcon
+                                field="trangThai"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Chức năng</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tintuc>
+                    <tr style="height: 100px;">
+                        <td class="text-center">
+                            <p-tableCheckbox [value]="tintuc"></p-tableCheckbox>
+                        </td>
+                        <td class="text-center">
+                            <ng-container *ngIf="tintuc.anhDaiDien== null">
+                                <img width="80px" style="border-radius: 5px;" src="assets/Uploads/avatar.jpg" alt="">
+                            </ng-container>
+                            <ng-container *ngIf="tintuc.anhDaiDien">
+                                <img width="80px" style="border-radius: 5px;"
+                                    src="assets/Uploads/news/{{ tintuc.anhDaiDien}}" alt="">
+                            </ng-container>
+                        </td>
+                        <td class="text-center">{{ tintuc.danhMucId }}</td>
+                        <td class="text-center">{{ tintuc.tieuDe }}</td>
+                        <td class="text-center">{{ tintuc.noiDung | slice:0:100}}
+                        </td>
+                        <td class="text-center">
+                            <p-inputSwitch [(ngModel)]="tintuc.trangThai"
+                                (ngModelChange)="toggleTrangThai(tintuc)"></p-inputSwitch>
+                        </td>
+                        <td class="text-center">
+                            <p-accordion>
+                                <p-accordionTab header="Action">
+                                    <button pRipple class="button-actioc-many" (click)="edit(tintuc)"><i
+                                            class="pi pi-pencil"></i> Sửa</button>
+                                    <button class="button-actioc-many" (click)="deleteOnly(tintuc)"><i
+                                            class="pi pi-trash"></i> Xóa</button>
+                                    <button class="button-actioc-many" (click)="openImg(tintuc)"><i
+                                            class="pi pi-images"></i> Ảnh</button>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        Tổng cộng có {{ tintucs ? tintucs.length : 0 }} tin tức.</div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="Dialog" [style]="{ width: '1050px' }" [header]="title" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="tieuDe">Tiêu đề</label>
+                    <input type="text" pInputText id="tieuDe" [(ngModel)]="tintuc.tieuDe" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !tintuc.tieuDe">Tiêu đề là bắt buộc.</small>
+                </div>
+                <div class="field mb-3">
+                    <label for="noiDung">Nội dunng</label>
+                    <p-editor [(ngModel)]="tintuc.noiDung" [style]="{ height: '280px' }"></p-editor>
+                </div>
+                <div class="field mb-3">
+                    <label for="baoHanh">Loại tin tức</label>
+                    <p-dropdown [options]="loai" [(ngModel)]="selectedLoaiId" optionLabel="name" [filter]="true"
+                        filterBy="name">
+                    </p-dropdown>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThai">Trạng thái</label>
+                    <p-dropdown [options]="actions" id="trangThai" [(ngModel)]="selectAction"
+                        optionLabel="name"></p-dropdown>
+                </div>
+                <div class="field mb-3">
+                    <label for="duongDan">Ảnh chi tiết sản phẩm</label>
+                    <div>
+                        <input type="file" id="fileInput" (change)="onFilesSelected($event)" multiple />
+                        <label for="fileInput" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="selectedFiles && selectedFiles.length > 0" class="file-selected">
+                        <p>Danh sách ảnh:</p>
+                        <ng-container *ngIf="shouldDisplayImage">
+                            <ul style="list-style: none; display: flex; flex-wrap: wrap;">
+                                <li *ngFor="let file of selectedFiles"
+                                    style="box-sizing: border-box; padding: 15px; text-align: center; ">
+                                    <img width="150px" src="assets/Uploads/news/{{ file.name }}" alt="">
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <ng-container *ngIf="!shouldDisplayImage">
+                            <ul style="list-style: none; ">
+                                <li *ngFor="let file of selectedFiles">
+                                    {{ file.name }}
+                                </li>
+                            </ul>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialog()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="save()"
+                    (click)="onUpload()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
+
+        <!-- Ảnh sản phẩm -->
+        <p-dialog [(visible)]="DialogImg" [style]="{ width: '75vw' }" [header]="titleImg" [modal]="true"
+            (onHide)="onDialogHide()" styleClass="p-fluid">
+            <div class="col-12">
+                <div class="card">
+                    <p-toolbar styleClass="mb-4 gap-2">
+                        <ng-template pTemplate="left">
+                            <button pButton pRipple label="Thêm mới"
+                                style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                                icon="pi pi-plus" class=" button-radius me-2 " (click)="openImgDetail()"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                                (click)="deleteSelectedImg()" [disabled]="!selectedImg || !selectedImg.length"></button>
+                        </ng-template>
+
+                        <ng-template pTemplate="right">
+                            <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                                label="Xuất file Excel" icon="pi pi-upload"
+                                class="p-button-help button-radius"></button>
+                        </ng-template>
+                    </p-toolbar>
+
+                    <p-table [value]="anhs" [paginator]="true" [rows]="10" [globalFilterFields]="['trangThai']"
+                        [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selectedImg" [rowHover]="true"
+                        currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                        [showCurrentPageReport]="true" [scrollable]="true">
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+                                <h5 class="m-0">{{ titleImg }}</h5>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr class="text-center">
+                                <th class="text-center" style="width: 4rem;">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th class="text-center" pSortableColumn="tinTucId">Tin tức<p-sortIcon
+                                        field="tinTucId"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="noiDung">Ảnh tin tức<p-sortIcon
+                                        field="noiDung"></p-sortIcon>
+                                </th>
+                                <th class="text-center" pSortableColumn="trangThai">Ảnh đại diện<p-sortIcon
+                                        field="trangThai"></p-sortIcon>
+                                </th>
+                                <th class="text-center">Chức năng</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-anh>
+                            <tr style="height: 100px;">
+                                <td class="text-center">
+                                    <p-tableCheckbox [value]="anh"></p-tableCheckbox>
+                                </td>
+                                <td class="text-center">{{ anh.tinTucName }}</td>
+                                <td class="text-center">
+                                    <img width="200px" src="assets/Uploads/news/{{ anh.duongDan }}" alt="">
+
+                                </td>
+                                <td class="text-center">
+                                    <p-inputSwitch [(ngModel)]="anh.trangThai"
+                                        (ngModelChange)="toggleTrangThaiImg(anh)"></p-inputSwitch>
+                                </td>
+                                <td class="text-center">
+                                    <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px;"
+                                        class="p-button-rounded p-button-success me-2 action-button"
+                                        (click)="editImg(anh)"></button>
+                                    <button pButton pRipple icon="pi pi-trash"
+                                        class="p-button-rounded p-button-warning action-button"
+                                        (click)="deleteOnlyImg(anh)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Tổng cộng có {{ anhs ? anhs.length : 0 }} ảnh tin tức.</div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-dialog>
+        <p-dialog [(visible)]="DialogImgDetail" [style]="{ width: '1050px' }" [header]="titleImg" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="duongDan">Ảnh đại tin tức</label>
+                    <div>
+                        <input type="file" id="file" (change)="onFileOnly($event)" />
+                        <label for="file" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="fileOnly && fileOnly.length > 0" class="file-selected">
+                        <ul style="list-style: none;">
+                            <li *ngFor="let file of fileOnly">
+                                <ng-container *ngIf="shouldDisplayImage">
+                                    <img width="250px" src="assets/Uploads/news/{{ file.name }}" alt="">
+                                </ng-container>
+                                <ng-container *ngIf="!shouldDisplayImage">
+                                    {{ file.name }}
+                                </ng-container>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialogImg()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="saveImg()"
+                    (click)="onUploadImg()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+    </div>
+</div>

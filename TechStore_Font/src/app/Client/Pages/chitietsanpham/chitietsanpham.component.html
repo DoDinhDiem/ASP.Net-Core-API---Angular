@@ -1,0 +1,319 @@
+<!-- Begin Li's Breadcrumb Area -->
+<p-toast></p-toast>
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a routerLink="/">Trang chủ</a></li>
+                <li class="active">{{ sanpham.tenSanPham }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- content-wraper start -->
+<div class="content-wraper">
+    <div class="container">
+        <div class="row single-product-area">
+            <div class="col-lg-5 col-md-6">
+                <!-- Product Details Left -->
+                <div class="product-details-left">
+                    <!-- product-slider.component.html -->
+                    <div class="col-lg-12 col-md-12" style="height: 440px; line-height: 440px;">
+                        <div class="slider-area">
+                            <div *ngFor="let image of anhsanphams; let i = index" class="mySlides" [style.display]="
+                                    i === currentIndex ? 'block' : 'none'
+                                ">
+                                <img src="assets/Uploads/products/{{ image }}" alt="Slide {{ i + 1 }}" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- YourComponent.component.html -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="slider-area-small">
+                            <div class="img-small-container">
+                                <div *ngFor="
+                                        let image of anhsanphams;
+                                        let i = index
+                                    " class="img-small" [ngClass]="{ active: i === currentIndex }">
+                                    <img src="assets/Uploads/products/{{
+                                            image
+                                        }}" alt="Slide {{ i + 1 }}" />
+                                </div>
+                            </div>
+                            <button class="prev" (click)="prevSlide()">
+                                ❮
+                            </button>
+                            <button class="next" (click)="nextSlide()">
+                                ❯
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--// Product Details Left -->
+            </div>
+            <div class="col-lg-7 col-md-6">
+                <div class="product-details-view-content pt-60">
+                    <div class="product-info">
+                        <h2>{{ sanpham.tenSanPham }}</h2>
+                        <div class="price-box pt-40">
+                            <span class="new-price new-price-2">{{ sanpham.giaBan - sanpham.khuyenMai| number
+                                }}<small>đ</small></span>
+                            <span class="old-price" style="text-decoration: line-through; margin-left: 10px;">{{
+                                sanpham.giaBan| number }} <small>đ</small></span>
+                        </div>
+                        <div class="product-variants pt-20">
+                            <div class="produt-variants-size">
+                                <label>Bảo hành</label>
+                                <p class="baohanh">
+                                    {{ sanpham.baoHanh }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="single-add-to-cart">
+                            <form action="#" class="cart-quantity">
+                                <div class="quantity">
+                                    <label>Số lượng</label>
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" style="border-radius: 5px 0px 0px 5px;"
+                                            value="1" type="text" />
+
+                                    </div>
+                                </div>
+                                <button class="add-to-cart" style="border-radius: 5px" type="submit"
+                                    (click)="addToCart(sanpham)">
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </form>
+                        </div>
+                        <div class=" product-additional-info pt-25">
+                            <div class="product-social-sharing pt-25">
+                                <ul>
+                                    <li class="facebook">
+                                        <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
+                                    </li>
+                                    <li class="twitter">
+                                        <a href="#"><i class="fa fa-twitter"></i>Twitter</a>
+                                    </li>
+                                    <li class="google-plus">
+                                        <a href="#"><i class="fa fa-google-plus"></i>Google +</a>
+                                    </li>
+                                    <li class="instagram">
+                                        <a href="#"><i class="fa fa-instagram"></i>Instagram</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="block-reassurance">
+                            <ul>
+                                <li>
+                                    <div class="reassurance-item">
+                                        <div class="reassurance-icon">
+                                            <i class="fa fa-check-square-o"></i>
+                                        </div>
+                                        <p>Chính sách bảo mật</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="reassurance-item">
+                                        <div class="reassurance-icon">
+                                            <i class="fa fa-truck"></i>
+                                        </div>
+                                        <p>Chính sách giao hàng</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="reassurance-item">
+                                        <div class="reassurance-icon">
+                                            <i class="fa fa-exchange"></i>
+                                        </div>
+                                        <p>Chính sách hoàn trả</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="product-area li-laptop-product pt-30 pb-50">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Li's Section Area -->
+            <div class="col-lg-12">
+                <div class="li-section-title">
+                    <h2>
+                        <span>Sản phẩm tương tự</span>
+                    </h2>
+                </div>
+                <div class="row">
+                    <div class="similar-product">
+                        <div style="width: 236px; padding: 25px" *ngFor="let sp of visibleProducts">
+                            <div class="single-product-wrap">
+                                <div class="product-image">
+                                    <a [routerLink]="['/chitiet', sp.id]">
+                                        <img src="assets/Uploads/products/{{sp.avatar}}" alt="Li's Product Image" />
+                                    </a>
+                                    <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0) }}%</span>
+                                </div>
+                                <div class="product_desc">
+                                    <div class="product_desc_info">
+                                        <h4>
+                                            <a class="product_name" [routerLink]="['/chitiet', sp.id]">
+                                                {{ sp.tenSanPham }}</a>
+                                        </h4>
+                                        <div class="price-box">
+                                            <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                            <span class="old-price">{{ sp.giaBan| number }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="add-actions">
+                                        <ul class="add-actions-link">
+                                            <li class="add-cart active">
+                                                <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ
+                                                    hàng</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="navigation-button btn-prev" (click)="onPrevClickProduct()">❮</button>
+                        <button class="navigation-button btn-next" (click)="onNextClickProduct()">❯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</section>
+
+<div class="product-area pt-35">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="li-product-tab">
+                    <ul class="nav li-product-menu">
+                        <li>
+                            <a class="active" data-toggle="tab" href="#description"><span>Mô tả</span></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#reviews"><span>Bình luận</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Begin Li's Tab Menu Content Area -->
+            </div>
+        </div>
+        <div class="tab-content row">
+            <div class="col-lg-7 col-md-6 mt-5">
+                <div id="description" class="tab-pane active show" role="tabpanel">
+                    <div class="product-description">
+                        <p [innerHTML]="displayedContent"></p>
+                        <div class="button-container">
+                            <button *ngIf="showMoreLessButton" (click)="toggleContent()">
+                                {{ isContentExpanded ? 'Thu gọn' : 'Xem thêm' }}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="reviews" class="tab-pane" role="tabpanel">
+                    <div class="li-comment-section mt-10"
+                        style="box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1), 0 2px 6px 2px rgba(60, 64, 67, 0.15); border-radius: 5px; padding: 20px; background-color: #f9fafb;">
+                        <h3 *ngIf="comentProducts && comentProducts.length">{{ comentProducts.length }} Bình luận</h3>
+                        <ul>
+                            <li style="padding: 20px; border-radius: 10px;
+                            box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15); background-color: #fff;"
+                                *ngFor="let cmt of comentProducts | paginate: { itemsPerPage: 10, currentPage: p }">
+                                <div class="author-avatar pt-15">
+                                    <img style="width: 40px" src="assets/Client/styles/images/product-details/user.png"
+                                        alt="User" />
+                                </div>
+                                <div class="comment-body">
+                                    <!-- <span class="reply-btn pt-xs-5"><a href="#">reply</a></span> -->
+                                    <h5 class="comment-author">{{ cmt.userId }}
+                                        <p> <i class="fa fa-calendar"></i> {{ cmt.createDate | date:'dd/MM/yyyy \'lúc\'
+                                            h:mm a' }}</p>
+                                    </h5>
+                                    <p
+                                        style="padding: 20px; border-radius: 10px;
+                                    box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15); background-color: #fff;">
+                                        {{ cmt.noiDung }}
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+                    <!-- Li's Blog Comment Section End Here -->
+                    <!-- Begin Blog comment Box Area -->
+                    <div class="li-blog-comment-wrapper">
+                        <h3>Hỏi & Đáp</h3>
+                        <form action="#">
+                            <div class="comment-post-box">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Bình luận</label>
+                                        <textarea name="commnet" [(ngModel)]="comentProduct.noiDung"
+                                            placeholder="Viết bình luận"></textarea>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="coment-btn pt-30 pb-sm-30 pb-xs-30 f-left">
+                                            <input class="li-btn-2" type="submit" (click)="save()" name="submit"
+                                                value="Bình luận" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 mt-5">
+                <div id="product-details">
+                    <div class="product-details-manufacturer" style="box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15);
+                    border-radius: 5px; padding: 7px;">
+                        <h5>Thông số kỹ thuật</h5>
+                        <div class="table-detail">
+
+                            <table class="table table-striped">
+                                <!-- <thead>
+                                    <tr>
+                                        <th scope="col">Thông số</th>
+                                        <th scope="col">Mô tả</th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <ng-container *ngFor="let ctsp of thongsos; let i = index">
+                                        <!-- Hiển thị chỉ 10 mục ban đầu -->
+                                        <ng-container *ngIf="i < 10 || showAll">
+                                            <tr>
+                                                <td>{{ ctsp.tenThongSo }}</td>
+                                                <td>{{ ctsp.moTa }}</td>
+                                            </tr>
+                                        </ng-container>
+                                        <!-- Nếu có nhiều hơn 10 mục, thì hiển thị nút "Xem thêm" khi chưa click -->
+                                        <ng-container *ngIf="i === 9 && thongsos.length > 10 && !showAll">
+                                            <tr style="background-color: #fff;">
+                                                <td colspan="2">
+                                                    <button class="button-thongso" (click)="showAll = true">Xem
+                                                        thêm</button>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

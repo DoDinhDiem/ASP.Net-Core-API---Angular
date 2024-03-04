@@ -1,0 +1,43 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="/admin">
+        <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.png"
+            alt="logo">
+        <span style="font-weight: 900;">TechStore</span>
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+        (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu"
+        [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <div class="p-link">
+            <p-calendar [(ngModel)]="currentDate" [showIcon]="true" inputId="buttondisplay" dateFormat="dd/mm/yy"
+                readonly="true"></p-calendar>
+        </div>
+        <button class="p-link layout-topbar-button" (click)="toggleProfileMenu()">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+            <div *ngIf="isProfileMenuOpen" class="profile-dropdown">
+                <ul>
+                    <li><a class="p-link" href="#">
+                            <i class="pi pi-fw pi-user" style="font-size: 12px !important;"></i>
+                            Hồ sơ
+                        </a>
+                    </li>
+                    <li>
+                        <a style="font-weight: 500;" class="p-link" (click)="onSubmit()">
+                            <i class="pi pi-fw pi-power-off" style="font-size: 12px !important;"></i>
+                            Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </button>
+    </div>
+</div>

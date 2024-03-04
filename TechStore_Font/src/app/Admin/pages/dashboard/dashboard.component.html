@@ -1,0 +1,113 @@
+<div class="grid">
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Đơn hàng</span>
+                    <div class="text-900 font-medium text-xl">{{ donHang }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-500" style="cursor: pointer;" routerLink="/admin/hoadonban">Chi tiết</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Sản phẩm</span>
+                    <div class="text-900 font-medium text-xl">{{ sanPham }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-briefcase text-orange-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-500" style="cursor: pointer;" routerLink="/admin/sanpham">Chi tiết</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Khách hàng</span>
+                    <div class="text-900 font-medium text-xl">{{ khachHang }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-users text-cyan-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-500" style="cursor: pointer;" routerLink="/admin/khachhang">Chi tiết</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">Tin tức</span>
+                    <div class="text-900 font-medium text-xl">{{ tinTuc }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                    [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                    <i class="pi pi-comment text-purple-500 text-xl"></i>
+                </div>
+            </div>
+            <span class="text-500" style="cursor: pointer;" routerLink="/admin/tintuc">Chi tiết</span>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <div class="flex">
+                <div class="col-12 lg:col-6">
+                    <h5>Thống kê năm</h5>
+                </div>
+                <div class="col-12 lg:col-6">
+                    <input type="text" style="height: 25px !important" pInputText [(ngModel)]="YearDate"
+                        (ngModelChange)="onYearDateChange()" />
+                </div>
+            </div>
+            <p-chart type="bar" [data]="barDataYear" [options]="barOptions"></p-chart>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <div class="flex">
+                <div class="col-12 lg:col-6">
+                    <h5>Thống kê theo ngày</h5>
+                </div>
+                <div class="col-12 lg:col-6 flex">
+                    <input type="text" style="height: 25px !important; width: 50px !important;" pInputText
+                        [(ngModel)]="currentDay" (ngModelChange)="onNgayChange()" />
+                    <p>/</p>
+                    <input type="text" style="height: 25px !important; width: 50px !important;" pInputText
+                        [(ngModel)]="currentMonth" (ngModelChange)="onNgayChange()" />
+                    <p>/</p>
+                    <input type="text" style="height: 25px !important; width: 50px !important;" pInputText
+                        [(ngModel)]="currentYear" (ngModelChange)="onNgayChange()" />
+                </div>
+            </div>
+            <p-chart type="bar" [data]="barDataDay" [options]="barOptions"></p-chart>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <div class="flex">
+                <div class="col-12 lg:col-6">
+                    <h5>Thống kê các tháng trong năm</h5>
+                </div>
+                <div class="col-12 lg:col-6">
+                    <input type="text" style="height: 25px !important" pInputText [(ngModel)]="MothDate"
+                        (ngModelChange)="onMothDateChange()" />
+                </div>
+            </div>
+            <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
+        </div>
+    </div>
+</div>

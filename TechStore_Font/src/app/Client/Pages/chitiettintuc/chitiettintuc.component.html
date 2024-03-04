@@ -1,0 +1,170 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a routerLink="/">Trang chủ</a></li>
+                <li class="active">{{ tintuc.tieuDe | slice:0:50}}...</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Li's Main Blog Page Area -->
+<div class="li-main-blog-page li-main-blog-details-page pt-60 pb-60 pb-sm-45 pb-xs-45">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Li's Blog Sidebar Area -->
+            <div class="col-lg-3 order-lg-1 order-2">
+                <div class="li-blog-sidebar-wrapper">
+                    <div class="li-blog-sidebar">
+                        <div class="li-sidebar-search-form">
+                            <form action="#">
+                                <input type="text" class="li-search-field" placeholder="search here">
+                                <button type="submit" class="li-search-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="li-blog-sidebar pt-25">
+                        <h4 class="li-blog-sidebar-title">Tin tức</h4>
+                        <ul class="li-blog-archive">
+                            <li *ngFor="let news of tinTuc">
+                                <a routerLink="/catalog-news/{{ news.id }}">{{ news.tenDanhMuc}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="li-blog-sidebar">
+                        <h4 class="li-blog-sidebar-title">Blog Archives</h4>
+                        <ul class="li-blog-archive">
+                            <li><a href="#">January (10)</a></li>
+                            <li><a href="#">February (08)</a></li>
+                            <li><a href="#">March (07)</a></li>
+                            <li><a href="#">April (14)</a></li>
+                            <li><a href="#">May (10)</a></li>
+                            <li><a href="#">June (06)</a></li>
+                        </ul>
+                    </div>
+                    <div class="li-blog-sidebar">
+                        <h4 class="li-blog-sidebar-title">Recent Post</h4>
+                        <div class="li-recent-post pb-30">
+                            <div class="li-recent-post-thumb">
+                                <a href="blog-details.html">
+                                    <img class="img-full" src="assets/Client/styles/images/product/small-size/3.jpg"
+                                        alt="Li's Product Image">
+                                </a>
+                            </div>
+                            <div class="li-recent-post-des">
+                                <span><a href="blog-details.html">First Blog Post</a></span>
+                                <span class="li-post-date">25.11.2018</span>
+                            </div>
+                        </div>
+                        <div class="li-recent-post pb-30">
+                            <div class="li-recent-post-thumb">
+                                <a href="blog-details.html">
+                                    <img class="img-full" src="assets/Client/styles/images/product/small-size/2.jpg"
+                                        alt="Li's Product Image">
+                                </a>
+                            </div>
+                            <div class="li-recent-post-des">
+                                <span><a href="blog-details.html">First Blog Post</a></span>
+                                <span class="li-post-date">25.11.2018</span>
+                            </div>
+                        </div>
+                        <div class="li-recent-post pb-30">
+                            <div class="li-recent-post-thumb">
+                                <a href="blog-details.html">
+                                    <img class="img-full" src="assets/Client/styles/images/product/small-size/5.jpg"
+                                        alt="Li's Product Image">
+                                </a>
+                            </div>
+                            <div class="li-recent-post-des">
+                                <span><a href="blog-details.html">First Blog Post</a></span>
+                                <span class="li-post-date">25.11.2018</span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <!-- Li's Blog Sidebar Area End Here -->
+            <!-- Begin Li's Main Content Area -->
+            <div class="col-lg-9 order-lg-2 order-1">
+                <div class="row li-main-content">
+                    <div class="col-lg-12">
+                        <div class="li-blog-single-item pb-30">
+                            <div class="li-blog-banner">
+                                <a><img style="height: 300px; border-radius: 5px;" class="img-full"
+                                        src="assets/Uploads/news/{{ tintuc.anhDaiDien }}" alt=""></a>
+                            </div>
+                            <div class="li-blog-content">
+                                <div class="li-blog-details">
+                                    <h3 class="li-blog-heading pt-25"><a>{{ tintuc.tieuDe }}</a></h3>
+                                    <div class="li-blog-meta">
+                                        <a class="post-time"><i class="fa fa-calendar"></i>{{ tintuc.createDate |
+                                            date:'dd \'tháng\' MM \'năm\' yyyy \'lúc\' h:mm a' }}</a>
+                                    </div>
+                                    <div class="img-width" [innerHTML]="tintuc.noiDung"></div>
+
+                                    <div class="li-blog-sharing text-center pt-30">
+                                        <h4>Chia sẻ bài đăng:</h4>
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Begin Li's Blog Comment Section -->
+                        <div class="li-comment-section">
+                            <ul>
+                                <li style="padding: 20px; border-radius: 10px;
+                                box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15); background-color: #fff;"
+                                    *ngFor="let cmt of comentNews | paginate: { itemsPerPage: 10, currentPage: p }">
+                                    <div class="author-avatar pt-15">
+                                        <img style="width: 40px"
+                                            src="assets/Client/styles/images/product-details/user.png" alt="User" />
+                                    </div>
+                                    <div class="comment-body">
+                                        <!-- <span class="reply-btn pt-xs-5"><a href="#">reply</a></span> -->
+                                        <h5 class="comment-author">{{ cmt.userId }}
+                                            <p> <i class="fa fa-calendar"></i>
+                                                {{ cmt.createDate | date:'dd/MM/yyyy\'lúc\' h:mm a' }}</p>
+                                        </h5>
+                                        <p
+                                            style="padding: 20px; border-radius: 10px;
+                                        box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15); background-color: #fff;">
+                                            {{ cmt.noiDung }}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+                        <!-- Li's Blog Comment Section End Here -->
+                        <!-- Begin Blog comment Box Area -->
+                        <div class="li-blog-comment-wrapper">
+                            <h3>Để lại câu hỏi</h3>
+                            <form action="#">
+                                <div class="comment-post-box">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <label>Bình luận</label>
+                                            <textarea name="commnet" [(ngModel)]="comentNew.noiDung"
+                                                placeholder="Bình luận"></textarea>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="coment-btn pt-30 pb-sm-30 pb-xs-30 f-left">
+                                                <input class="li-btn-2" type="submit" (click)="save()" name="submit"
+                                                    value="Đăng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Main Content Area End Here -->
+        </div>
+    </div>
+</div>

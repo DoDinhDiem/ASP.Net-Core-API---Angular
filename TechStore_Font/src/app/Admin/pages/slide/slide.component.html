@@ -1,0 +1,107 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Thêm mới" style="
+                            background: #fff;
+                            color: #1d4e89;
+                            border: 1px solid #1d4e89;
+                            margin-right: 5px;
+                        " icon="pi pi-plus" class="button-radius me-2" (click)="openNew()"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button style="background: #1d4e89; border: 1px solid #1d4e89" pButton pRipple
+                        label="Xuất file Excel" icon="pi pi-upload" class="p-button-help button-radius"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="slides" [paginator]="true" [rows]="10" [globalFilterFields]="[ 'anhSlide', 'status']"
+                [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                [showCurrentPageReport]="true" [scrollable]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">{{ title }}</h5>
+                        <span class="p-input-icon-left flex">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="keyword" (input)="onKeywordInput()"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center" pSortableColumn="anhSlide">Ảnh slide<p-sortIcon
+                                field=" anhSlide"></p-sortIcon></th>
+                        <th class="text-center" pSortableColumn="status">
+                            Ẩn/Hiện<p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Chức năng</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-slide>
+                    <tr>
+                        <td class="text-center">
+                            <img width="250px" style="border-radius: 5px" src="assets/Uploads/slide/{{slide.anhSlide}}"
+                                alt="" />
+                        </td>
+                        <td class="text-center">
+                            <p-inputSwitch [(ngModel)]="slide.status"
+                                (ngModelChange)="toggleTrangThai(slide)"></p-inputSwitch>
+                        </td>
+                        <td class="text-center">
+                            <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px"
+                                class="p-button-rounded p-button-success me-2 action-button"
+                                (click)="edit(slide)"></button>
+                            <button pButton pRipple icon="pi pi-trash"
+                                class="p-button-rounded p-button-warning action-button"
+                                (click)="deleteOnly(slide)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        Tổng cộng có {{ slides ? slides.length : 0 }} ảnh slide.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="Dialog" [style]="{ width: '750px' }" [header]="title" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="duongDanAnh">Avatar</label>
+                    <div>
+                        <input autocomplete="off" type="file" id="file" (change)="onFileOnly($event)" />
+                        <label for="file" class="file-upload-btn">Tải ảnh</label>
+                    </div>
+                    <div *ngIf="fileOnly" class="file-selected">
+                        <ng-container *ngIf="shouldDisplayImage">
+                            <img width="200px" style="margin: auto; border-radius: 5px"
+                                src="assets/Uploads/slide/{{ fileOnly }}" alt="" />
+                        </ng-container>
+                        <ng-container *ngIf="!shouldDisplayImage">
+                            {{ fileOnly.name }}
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="field mb-3">
+                    <label for="trangThai">Trạng thái</label>
+                    <p-dropdown [options]="actions" [(ngModel)]="selectAction" optionLabel="name"></p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialog()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="save()"
+                    (click)="onUpload()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
+    </div>
+</div>

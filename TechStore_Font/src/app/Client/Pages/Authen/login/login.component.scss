@@ -1,0 +1,54 @@
+.login-css {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(../../../../../assets/Client/images/bg-01.jpg);
+    position: relative;
+}
+
+.login-css::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    background-size: cover;
+    background-position: center;
+}
+
+.login-form {
+    width: 600px;
+    padding: 50px;
+    border-radius: 53px;
+}
+input {
+    border-radius: 5px;
+}
+.logo-authen {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+    img {
+        height: 50px;
+    }
+}
+
+.register-button:hover {
+    background: #515e74;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaaaaa;
+}

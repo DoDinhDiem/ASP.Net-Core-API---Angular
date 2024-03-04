@@ -1,0 +1,356 @@
+<div class="slider-with-banner">
+    <p-toast></p-toast>
+    <div class="container">
+        <div class="row">
+            <!-- Begin Slider Area -->
+            <div class="col-lg-12 col-md-12">
+                <div class="slider-area" style="box-shadow: 5px 5px 10px 0px #888888; border-radius: 5px;">
+                    <div *ngFor="let image of images; let i = index" class="mySlides"
+                        [style.display]="i === currentIndex ? 'block' : 'none'">
+                        <img src="assets/Uploads/slide/{{ image.anhSlide }}" alt="Slide {{ i + 1 }}" />
+                    </div>
+                    <button class="prev" (click)="prevSlide()">❮</button>
+                    <button class="next" (click)="nextSlide()">❯</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Slider With Banner Area End Here -->
+
+<!-- Static Top Area End Here -->
+<!-- product-area start -->
+<div class="product-area pt-55 pb-25 pt-xs-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="li-product-tab">
+                    <ul class="nav li-product-menu">
+                        <li>
+                            <a class="active" data-toggle="tab" href="#li-new-product"><span>Sản phẩm mới</span></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#li-bestseller-product"><span>Giảm giá</span></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#li-featured-product"><span>Bán chạy</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Begin Li's Tab Menu Content Area -->
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="li-new-product" class="tab-pane active show">
+                <div class="row">
+                    <div style="width: 236px; padding: 25px" *ngFor="let sp of sanphamNews">
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a [routerLink]="['/chitiet', sp.id]">
+                                    <img src="assets/Uploads/products/{{
+                                            sp.avatar
+                                        }}" alt="Li's Product Image" />
+                                </a>
+                                <span class="sticker">Mới</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <h4>
+                                        <a class="product_name" [routerLink]="['/chitiet', sp.id]">{{ sp.tenSanPham
+                                            }}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                        <span class="old-price">{{ sp.giaBan| number }}</span>
+                                    </div>
+                                </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active">
+                                            <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ hàng</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="li-bestseller-product" class="tab-pane" role="tabpanel">
+                <div class="row">
+                    <div style="width: 236px; padding: 25px" *ngFor="let sp of sanphamKMs">
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a [routerLink]="['/chitiet', sp.id]">
+                                    <img src="assets/Uploads/products/{{sp.avatar}}" alt="Li's Product Image" />
+                                </a>
+                                <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0) }}%</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <h4>
+                                        <a class="product_name" [routerLink]="['/chitiet', sp.id]">{{ sp.tenSanPham
+                                            }}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                        <span class="old-price">{{ sp.giaBan| number }}</span>
+                                    </div>
+                                </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active">
+                                            <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ hàng</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single-product-wrap end -->
+                </div>
+            </div>
+            <div id="li-featured-product" class="tab-pane" role="tabpanel">
+                <div class="row">
+                    <div style="width: 236px; padding: 25px" *ngFor="let sp of sanphamBCs">
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a [routerLink]="['/chitiet', sp.id]">
+                                    <img src="assets/Uploads/products/{{sp.avatar}}" alt="Li's Product Image" />
+                                </a>
+                                <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0) }}%</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <h4>
+                                        <a class="product_name" [routerLink]="['/chitiet', sp.id]">{{ sp.tenSanPham
+                                            }}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                        <span class="old-price">{{ sp.giaBan| number }}</span>
+                                    </div>
+                                </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active">
+                                            <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ hàng</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single-product-wrap end -->
+                </div>
+            </div>
+        </div>
+        <div id="li-featured-product" class="tab-pane" role="tabpanel">
+            <div class="row"></div>
+        </div>
+    </div>
+</div>
+<!-- Begin Li's Laptop Product Area -->
+<section class="product-area li-laptop-product pt-60 pb-45 pt-sm-50 pt-xs-60">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Li's Section Area -->
+            <div class="col-lg-12">
+                <div class="li-section-title">
+                    <h2>
+                        <span>Điện thoại</span>
+                    </h2>
+                </div>
+                <div class="row">
+                    <div style="width: 236px; padding: 25px" *ngFor="let sp of dienThoais">
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a [routerLink]="['/chitiet', sp.id]">
+                                    <img src="assets/Uploads/products/{{sp.avatar}}" alt="Li's Product Image" />
+                                </a>
+                                <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0) }}%</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <h4>
+                                        <a class="product_name" [routerLink]="['/chitiet', sp.id]">{{ sp.tenSanPham
+                                            }}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                        <span class="old-price">{{ sp.giaBan| number }}</span>
+                                    </div>
+                                </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active">
+                                            <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ
+                                                hàng</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Li's Section Area End Here -->
+        </div>
+    </div>
+</section>
+<!-- Li's Laptop Product Area End Here -->
+<!-- Begin Li's TV & Audio Product Area -->
+<section class="product-area li-laptop-product pt-60 pb-45 pt-sm-50 pt-xs-60">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Li's Section Area -->
+            <div class="col-lg-12">
+                <div class="li-section-title">
+                    <h2>
+                        <span>Laptop</span>
+                    </h2>
+                </div>
+                <div class="row">
+                    <div style="width: 236px; padding: 25px" *ngFor="let sp of lapTops">
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a [routerLink]="['/chitiet', sp.id]">
+                                    <img src="assets/Uploads/products/{{sp.avatar}}" alt="Li's Product Image" />
+                                </a>
+                                <span class="sticker">-{{ ((sp.khuyenMai / sp.giaBan) * 100).toFixed(0) }}%</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <h4>
+                                        <a class="product_name" [routerLink]="['/chitiet', sp.id]">{{ sp.tenSanPham
+                                            }}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{ sp.giaBan - sp.khuyenMai| number }}</span>
+                                        <span class="old-price">{{ sp.giaBan | number }}</span>
+                                    </div>
+                                </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active">
+                                            <a style="cursor: pointer;" (click)="addToCart(sp)">Thêm vào giỏ
+                                                hàng</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Li's Section Area End Here -->
+        </div>
+    </div>
+</section>
+<!-- Li's TV & Audio Product Area End Here -->
+<!-- Li's Static Home Area End Here -->
+<!-- Begin Group Featured Product Area -->
+<div class="group-featured-product pt-60 pb-40 pb-xs-25">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Featured Product Area -->
+            <div class="col-lg-4">
+                <div class="featured-product">
+                    <div class="li-section-title">
+                        <h2>
+                            <span>Tin công nghệ</span>
+                        </h2>
+                    </div>
+                    <div class="featured-product-active-2 owl-carousel">
+                        <div class="featured-product-bundle">
+                            <div class="row">
+                                <div class="group-featured-pro-wrapper" *ngFor="let cn of congNghes">
+                                    <div class="product-img">
+                                        <a>
+                                            <img alt="" src="assets/Uploads/news/{{ cn.anhDaiDien }}" />
+                                        </a>
+                                    </div>
+                                    <div class="featured-pro-content">
+
+                                        <h4>
+                                            <a class="featured-product-name" [routerLink]="['/detail-news', cn.id]">{{
+                                                cn.tieuDe
+                                                }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured Product Area End Here -->
+            <!-- Begin Featured Product Area -->
+            <div class="col-lg-4">
+                <div class="featured-product pt-sm-10 pt-xs-25">
+                    <div class="li-section-title">
+                        <h2>
+                            <span>Khám phá</span>
+                        </h2>
+                    </div>
+                    <div class="featured-product-active-2 owl-carousel">
+                        <div class="featured-product-bundle">
+                            <div class="row">
+                                <div class="group-featured-pro-wrapper" *ngFor="let kp of khamPhas">
+                                    <div class="product-img">
+                                        <a>
+                                            <img alt="" src="assets/Uploads/news/{{ kp.anhDaiDien }}" />
+                                        </a>
+                                    </div>
+                                    <div class="featured-pro-content">
+
+                                        <h4>
+                                            <a class="featured-product-name" [routerLink]="['/detail-news', kp.id]">{{
+                                                kp.tieuDe
+                                                }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured Product Area End Here -->
+            <!-- Begin Featured Product Area -->
+            <div class="col-lg-4">
+                <div class="featured-product pt-sm-10 pt-xs-25">
+                    <div class="li-section-title">
+                        <h2>
+                            <span>T-Games</span>
+                        </h2>
+                    </div>
+                    <div class="featured-product-active-2 owl-carousel">
+                        <div class="featured-product-bundle">
+                            <div class="row">
+                                <div class="group-featured-pro-wrapper" *ngFor="let cn of tGames">
+                                    <div class="product-img">
+                                        <a>
+                                            <img alt="" src="assets/Uploads/news/{{ cn.anhDaiDien }}" />
+                                        </a>
+                                    </div>
+                                    <div class="featured-pro-content">
+                                        <h4>
+                                            <a class="featured-product-name" [routerLink]="['/detail-news', cn.id]">{{
+                                                cn.tieuDe
+                                                }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+.mySlides {
+    display: none;
+    img {
+        width: 100%;
+        height: 450px;
+        border-radius: 5px;
+    }
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+    border: none;
+    display: none;
+}
+
+.prev {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.next {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: #555;
+}
+.next {
+    right: 15px;
+}
+
+.slider-area:hover {
+    .prev,
+    .next {
+        display: block;
+    }
+}

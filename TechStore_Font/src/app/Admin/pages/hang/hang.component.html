@@ -1,0 +1,99 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4 gap-2">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Thêm mới"
+                        style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
+                        icon="pi pi-plus" class=" button-radius me-2 " (click)="openNew()"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
+                        (click)="deleteSelected()" [disabled]="!selecteds || !selecteds.length"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <button style="background: #1D4E89; border: 1px solid #1D4E89;" pButton pRipple
+                        label="Xuất file Excel" icon="pi pi-upload" class="p-button-help button-radius"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [value]="hangSanPhams" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['tenHang', 'trangThai']" [tableStyle]="{ 'min-width': '60rem' }"
+                [(selection)]="selecteds" [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+                [showCurrentPageReport]="true" [scrollable]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">{{ title }}</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="keyword" (input)="onKeywordInput()"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr class="text-center">
+                        <th class="text-center" style="width: 4rem;">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th class="text-center" pSortableColumn="tenHang">Tên
+                            hãng<p-sortIcon field="tenHang"></p-sortIcon>
+                        </th>
+                        <th class="text-center" pSortableColumn="trangThai">Ẩn/Hiện<p-sortIcon
+                                field="trangThai"></p-sortIcon>
+                        <th class="text-center">Chức năng</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-hangSanPham>
+                    <tr>
+                        <td class="text-center">
+                            <p-tableCheckbox [value]="hangSanPham"></p-tableCheckbox>
+                        </td>
+                        <td class="text-center">{{ hangSanPham.tenHang }}</td>
+                        <td class="text-center">
+                            <p-inputSwitch [(ngModel)]="hangSanPham.trangThai"
+                                (ngModelChange)="toggleTrangThai(hangSanPham)"></p-inputSwitch>
+                        </td>
+                        <td class="text-center">
+                            <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px;"
+                                class="p-button-rounded p-button-success me-2 action-button"
+                                (click)="edit(hangSanPham)"></button>
+                            <button pButton pRipple icon="pi pi-trash"
+                                class="p-button-rounded p-button-warning action-button"
+                                (click)="deleteOnly(hangSanPham)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        Tổng cộng có {{ hangSanPhams ?
+                        hangSanPhams.length : 0 }} hãng sản phẩm.</div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="Dialog" [style]="{ width: '450px' }" [header]="title" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field mb-3">
+                    <label for="tenHang">Tên Hãng</label>
+                    <input type="text" pInputText id="tenHang" [(ngModel)]="hangSanPham.tenHang" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !hangSanPham.tenHang">Tên hãng là bắt buộc.</small>
+                    <div class="field mb-3">
+                        <label for="trangThai">Trạng thái</label>
+                        <p-dropdown [options]="actions" [(ngModel)]="selectAction" optionLabel="name"></p-dropdown>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
+                    (click)="hidenDialog()"></button>
+                <button pButton pRipple [label]="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="save()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
+    </div>
+</div>

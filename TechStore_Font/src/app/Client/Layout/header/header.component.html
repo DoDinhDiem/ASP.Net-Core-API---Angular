@@ -1,0 +1,36 @@
+<div class="header-bottom header-sticky stick d-none d-lg-block d-xl-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Begin Header Bottom Menu Area -->
+                <div class="hb-menu">
+                    <nav>
+                        <ul>
+                            <li class="after-content"><a routerLink="/">Trang
+                                    chủ</a>
+                            </li>
+                            <li class="megamenu-holder"><a style="cursor: pointer;">Sản phẩm</a>
+                                <ul class="hb-dropdown">
+                                    <li *ngFor="let lsp of loais">
+                                        <a routerLink="/loaisp/{{ lsp.id }}">{{ lsp.tenLoai}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-holder"><a href="blog-left-sidebar.html">Tin tức</a>
+                                <ul class="hb-dropdown">
+                                    <li *ngFor="let news of tinTuc">
+                                        <a routerLink="/catalog-news/{{ news.id }}">{{ news.tenDanhMuc}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="after-content"><a>Giới thiệu</a>
+                            </li>
+                            <li><a>Câu hỏi thường gặp</a></li>
+                            <li><a>Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

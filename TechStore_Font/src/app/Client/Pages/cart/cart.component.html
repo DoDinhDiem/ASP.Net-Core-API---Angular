@@ -1,0 +1,83 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a routerLink="/">Home</a></li>
+                <li class="active">Giỏ hàng</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!--Shopping Cart Area Strat-->
+<div class="Shopping-cart-area pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form>
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="li-product-remove">Xóa</th>
+                                    <th class="li-product-thumbnail">Ảnh</th>
+                                    <th class="cart-product-name">Sản phẩm</th>
+                                    <th class="li-product-price">Đơn giá</th>
+                                    <th class="li-product-quantity">Số lượng</th>
+                                    <th class="li-product-subtotal">Tổng tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cart of cartItems">
+                                    <td class="li-product-remove"><a (click)="removeFromCart(cart)"><i
+                                                class="fa fa-times"></i></a></td>
+                                    <td class="li-product-thumbnail"><a><img width="80px"
+                                                src="assets/Uploads/products/{{ cart.avatar }}"
+                                                alt="Li's Product Image"></a></td>
+                                    <td class="li-product-name"><a>{{ cart.tenSanPham }}</a></td>
+                                    <td class="li-product-price"><span class="amount">{{ cart.giaGiam | number}}</span>
+                                    </td>
+                                    <td class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" [name]="cart.soLuong"
+                                                [(ngModel)]="cart.soLuong" name="" type="text">
+                                            <div class="dec qtybutton" (click)="decrementQuantity(cart)"><i
+                                                    class="fa fa-angle-down"></i></div>
+                                            <div class="inc qtybutton" (click)="incrementQuantity(cart)"><i
+                                                    class="fa fa-angle-up"></i></div>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal"><span class="amount">{{ calculateSubtotal(cart) |
+                                            number }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="coupon-all">
+                                <div class="coupon">
+                                    <input id="coupon_code" class="input-text" name="coupon_code" value=""
+                                        placeholder="Mã giảm giá" type="text">
+                                    <input class="button" name="apply_coupon" value="Áp dụng" type="submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 ml-auto">
+                            <div class="cart-page-total">
+                                <h2>Tổng</h2>
+                                <ul>
+                                    <li>Tổng phụ <span>{{ totalPrice | number}}</span></li>
+                                    <li>Tổng cộng <span>{{ totalPrice | number}}</span></li>
+                                </ul>
+                                <a routerLink="/payment" routerLinkActive="router-link-active">Thanh toán</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

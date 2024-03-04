@@ -1,0 +1,53 @@
+.my-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Thêm dòng này để căn giữa theo chiều dọc */
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin-right: 5px;
+}
+
+.pagination a {
+    display: block;
+    padding: 5px 10px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ddd;
+    }
+
+    &.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+}
+
+.page-input {
+    width: 50px;
+    padding: 5px;
+    margin: 0 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.page-text {
+    margin: 0 5px;
+}

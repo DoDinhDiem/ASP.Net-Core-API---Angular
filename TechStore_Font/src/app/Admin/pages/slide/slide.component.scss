@@ -1,0 +1,43 @@
+.button-actioc-many {
+    width: 100%;
+    height: 30px;
+    font-weight: 300;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 1px;
+    color: #495057;
+    background-color: #ffffff;
+    &:hover {
+        background: #737e89;
+        color: #f1f1f1;
+    }
+}
+/* Thay đổi màu sắc và font của input file */
+input[type="file"] {
+    display: none; /* Ẩn input file mặc định */
+}
+
+/* Tùy chỉnh giao diện nút chọn tệp */
+label.file-upload-btn {
+    background-color: #1d4e89;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Khi di chuột vào nút chọn tệp */
+label.file-upload-btn:hover {
+    background-color: #163c6b;
+}
+
+/* Hiển thị tên tệp đã chọn */
+.file-selected {
+    margin-top: 10px;
+}
+
+/* Tùy chỉnh giao diện nút chọn tệp */
+input[type="file"]:focus + label.file-upload-btn {
+    outline: 1px solid #4caf50;
+}
