@@ -6,7 +6,6 @@ using TechStore.Models;
 
 namespace TechStore.Controllers
 {
-    [Authorize(Roles = "Admin,Nhân Viên")]
     [Route("api/[controller]")]
     [ApiController]
     public class BinhLuanTinTucController : ControllerBase

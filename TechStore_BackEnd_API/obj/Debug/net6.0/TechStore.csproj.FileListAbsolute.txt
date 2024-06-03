@@ -134,9 +134,9 @@ D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\staticwebassets\msbuild.buil
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.TechStore.props
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\staticwebassets.pack.json
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\scopedcss\bundle\TechStore.styles.css
-D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\TechStore.csproj.CopyComplete
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\TechStore.dll
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\refint\TechStore.dll
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\TechStore.pdb
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\TechStore.genruntimeconfig.cache
 D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\ref\TechStore.dll
+D:\TechStore\TechStore_BackEnd_API\obj\Debug\net6.0\TechStore.csproj.Up2Date

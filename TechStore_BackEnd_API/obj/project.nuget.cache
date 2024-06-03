@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sy2YQkqJERK2ShI1oCgy9/07QnkbX/pD4IoECfTOR0brjFZKPKX89RpnGpuEwXIJZ+5rjei2m/pGdPBgt46hPQ==",
+  "dgSpecHash": "LYAeoSK+Xl9OPErwrucNjitIv5O3sffvYPo3AcL8mB37piA61CkhfGaiTYNSxlwWy44PCYimOVBQHIAy1KAg4g==",
   "success": true,
   "projectFilePath": "D:\\TechStore\\TechStore_BackEnd_API\\TechStore.csproj",
   "expectedPackageFiles": [
@@ -55,11 +55,7 @@
     "C:\\Users\\dodin\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\dodin\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\dodin\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
-    "C:\\Users\\dodin\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\dodin\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\dodin\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\dodin\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\dodin\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
+    "C:\\Users\\dodin\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }

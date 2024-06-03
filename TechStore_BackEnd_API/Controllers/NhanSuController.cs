@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TechStore.Controllers
 {
-    [Authorize(Roles = "Admin,Nhân viên")]
     [Route("api/[controller]")]
     [ApiController]
     public class NhanSuController : ControllerBase
